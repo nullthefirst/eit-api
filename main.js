@@ -1,5 +1,5 @@
 const server = require('./lib/server');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const { read, add, update, del } = require('./lib/handlers');
 
 const app = server();
