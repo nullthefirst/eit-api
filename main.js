@@ -1,5 +1,5 @@
 const server = require('./lib/server');
-const PORT = process.env.PORT || 5000;
+const config = require('./lib/config');
 const { read, add, update, del } = require('./lib/handlers');
 
 const app = server();
@@ -12,6 +12,6 @@ app.put('/update/:id', update);
 
 app.delete('/delete/:id', del);
 
-app.listen(PORT, () => {
-    console.log(`Server running on port`, PORT);
+app.listen(config.port, () => {
+    console.log(`Server running on port`, config.port);
 });
