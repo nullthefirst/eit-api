@@ -7,7 +7,10 @@
 const assert = require('assert');
 const assertStrict = require('assert').strict;
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
+// Port
 const PORT = process.env.PORT || 5000;
 
 // Holder for Tests
@@ -17,7 +20,7 @@ var api = {};
 var helpers = {};
 helpers.makeGetRequest = (path, callback) => {
     // Configure the request details
-    var requestDetails = {
+    const requestDetails = {
         protocol: 'http:',
         hostname: 'localhost',
         port: PORT,
@@ -29,7 +32,7 @@ helpers.makeGetRequest = (path, callback) => {
     };
 
     // Send the request
-    var req = http.request(requestDetails, res => {
+    const req = http.request(requestDetails, res => {
         callback(res);
     });
 
@@ -40,7 +43,43 @@ helpers.makeGetRequest = (path, callback) => {
     req.end();
 };
 
-// Make a request to /ping
+helpers.makePostRequest = (path, callback) => {
+    // Post data
+    const data = JSON.stringify({
+        firstName: 'Hannah',
+        lastName: 'Askari',
+        country: 'Kenya',
+        age: 28,
+    });
+
+    // Configure the request details
+    const requestDetails = {
+        protocol: 'http:',
+        hostname: 'localhost',
+        port: PORT,
+        method: 'POST',
+        path: path,
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': data.length,
+        },
+    };
+
+    // Send the request
+    const req = http.request(requestDetails, res => {
+        callback(res);
+    });
+
+    req.on('error', err => {
+        console.log('Error: ', err);
+    });
+
+    req.write(data);
+
+    req.end();
+};
+
+// Make a request to / - read api
 api['/ should respond to GET with 200'] = done => {
     helpers.makeGetRequest('/', res => {
         assert.equal(res.statusCode, 200);
@@ -48,18 +87,17 @@ api['/ should respond to GET with 200'] = done => {
     });
 };
 
-// // Make a request to /api/users
-// api['/api/users should respond to GET with 400'] = done => {
-//     helpers.makeGetRequest('/api/users', res => {
-//         assert.equal(res.statusCode, 400);
-//         done();
-//     });
-// };
-
 // Make a request to a random path
 api['A random path should respond to GET with 404'] = done => {
     helpers.makeGetRequest('/this/path/shouldnt/exist', res => {
         assert.equal(res.statusCode, 404);
+        done();
+    });
+};
+
+api['/add should respond to POST with 201'] = done => {
+    helpers.makePostRequest('/add', res => {
+        assert.equal(res.statusCode, 201);
         done();
     });
 };
