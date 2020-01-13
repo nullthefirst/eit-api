@@ -4,8 +4,9 @@
  */
 
 // Dependencies
-var assert = require('assert');
+const assert = require('assert');
 const assertStrict = require('assert').strict;
+const api_tests = require('./api');
 
 // Application logic for the test runner
 _app = {};
@@ -20,6 +21,7 @@ helpers.getANumber = () => {
 // Holder of all tests
 _app.tests = {
     unit: {},
+    api: api_tests,
 };
 
 // Assert that the getANumber function is returning a number
