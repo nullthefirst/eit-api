@@ -113,6 +113,31 @@ helpers.makePutRequest = (path, callback) => {
     req.end();
 };
 
+helpers.makeDeleteRequest = (path, callback) => {
+    // Configure the request details
+    const requestDetails = {
+        protocol: 'http:',
+        hostname: 'localhost',
+        port: PORT,
+        method: 'DELETE',
+        path: path,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    // Send the request
+    const req = http.request(requestDetails, res => {
+        callback(res);
+    });
+
+    req.on('error', err => {
+        console.log('Error: ', err);
+    });
+
+    req.end();
+};
+
 // Make a request to / - read api
 api['/ should respond to GET with 200'] = done => {
     helpers.makeGetRequest('/', res => {
@@ -138,6 +163,13 @@ api['/add should respond to POST with 201'] = done => {
 
 api['/update/:id should responsd to PUT with 200'] = done => {
     helpers.makePutRequest('/update/58', res => {
+        assert.equal(res.statusCode, 200);
+        done();
+    });
+};
+
+api['/delete/:id should respond to DELETE with 200'] = done => {
+    helpers.makeDeleteRequest('/delete/59', res => {
         assert.equal(res.statusCode, 200);
         done();
     });
