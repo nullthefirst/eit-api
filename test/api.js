@@ -161,15 +161,15 @@ api['/add should respond to POST with 201'] = done => {
     });
 };
 
-api['/update/:id should responsd to PUT with 200'] = done => {
-    helpers.makePutRequest('/update/58', res => {
+api['/update/:id should respond to PUT with 200'] = done => {
+    helpers.makePutRequest('/update/54', res => {
         assert.equal(res.statusCode, 200);
         done();
     });
 };
 
 api['/delete/:id should respond to DELETE with 200'] = done => {
-    helpers.makeDeleteRequest('/delete/60', res => {
+    helpers.makeDeleteRequest('/delete/55', res => {
         assert.equal(res.statusCode, 200);
         done();
     });
