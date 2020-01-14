@@ -138,7 +138,17 @@ _app.produceTestReport = (limit, successes, errors) => {
 
     console.log('');
     console.log('--------END TEST REPORT--------');
+
+    // Close the server
+    _app.kill();
+};
+
+_app.kill = () => {
+    process.exit();
 };
 
 // Run the tests
 _app.runTests();
+
+// Export _app
+module.exports = _app;

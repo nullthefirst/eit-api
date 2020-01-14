@@ -8,8 +8,7 @@
         "test": "test"
     },
     "scripts": {
-        "test": "run-p start testing",
-        "testing": "node test/index.js",
+        "test": "node test/main.js",
         "start": "node main.js"
     },
     "repository": {
@@ -25,8 +24,5 @@
     "homepage": "https://github.com/Usheninte/pure-node-api#readme",
     "engines": {
         "node": "12.x"
-    },
-    "devDependencies": {
-        "npm-run-all": "^4.1.5"
     }
 }

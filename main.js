@@ -14,5 +14,5 @@ app.put('/update/:id', update);
 app.delete('/delete/:id', del);
 
 app.listen(PORT, () => {
-    console.log(`Server running on port`, PORT);
+    console.log('Server running on port', PORT);
 });
