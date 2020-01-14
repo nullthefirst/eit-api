@@ -7,8 +7,6 @@
 const assert = require('assert');
 const assertStrict = require('assert').strict;
 const http = require('http');
-const fs = require('fs');
-const path = require('path');
 
 // Port
 const PORT = process.env.PORT || 5000;
@@ -79,6 +77,42 @@ helpers.makePostRequest = (path, callback) => {
     req.end();
 };
 
+helpers.makePutRequest = (path, callback) => {
+    // Post data
+    const data = JSON.stringify({
+        firstName: 'Stefan',
+        lastName: 'Nualif',
+        country: 'Botswana',
+        age: 32,
+    });
+
+    // Configure the request details
+    const requestDetails = {
+        protocol: 'http:',
+        hostname: 'localhost',
+        port: PORT,
+        method: 'PUT',
+        path: path,
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': data.length,
+        },
+    };
+
+    // Send the request
+    const req = http.request(requestDetails, res => {
+        callback(res);
+    });
+
+    req.on('error', err => {
+        console.log('Error: ', err);
+    });
+
+    req.write(data);
+
+    req.end();
+};
+
 // Make a request to / - read api
 api['/ should respond to GET with 200'] = done => {
     helpers.makeGetRequest('/', res => {
@@ -98,6 +132,13 @@ api['A random path should respond to GET with 404'] = done => {
 api['/add should respond to POST with 201'] = done => {
     helpers.makePostRequest('/add', res => {
         assert.equal(res.statusCode, 201);
+        done();
+    });
+};
+
+api['/update/:id should responsd to PUT with 200'] = done => {
+    helpers.makePutRequest('/update/58', res => {
+        assert.equal(res.statusCode, 200);
         done();
     });
 };
