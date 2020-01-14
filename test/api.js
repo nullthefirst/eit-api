@@ -169,7 +169,7 @@ api['/update/:id should responsd to PUT with 200'] = done => {
 };
 
 api['/delete/:id should respond to DELETE with 200'] = done => {
-    helpers.makeDeleteRequest('/delete/59', res => {
+    helpers.makeDeleteRequest('/delete/60', res => {
         assert.equal(res.statusCode, 200);
         done();
     });
