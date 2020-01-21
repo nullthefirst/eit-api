@@ -1,17 +1,19 @@
 const server = require('./lib/server');
-const { read, add, update, del } = require('./lib/handlers');
+const { read, readOne, add, update, del } = require('./lib/handlers');
 
 const PORT = process.env.PORT || 5000;
 
 const app = server();
 
-app.get('/', read);
+app.get('/', read); // works
 
-app.post('/add', add);
+app.get('/', readOne);
 
-app.put('/update/:id', update);
+app.post('/', add); // works
 
-app.delete('/delete/:id', del);
+app.put('/', update); // works
+
+app.delete('/', del);
 
 app.listen(PORT, () => {
     console.log('Server running on port', PORT);
